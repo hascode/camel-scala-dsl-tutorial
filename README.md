@@ -1,13 +1,7 @@
 # Camel Scala DSL Tutorial
 
+Some short examples for using Apache Camel's Scala DSL.
+
 ---
 
-To compile you run:
-
-    mvn install
-
-To run this route:
-
-    mvn exec:java
-    
 *2012 Micha Kops / hasCode.com*

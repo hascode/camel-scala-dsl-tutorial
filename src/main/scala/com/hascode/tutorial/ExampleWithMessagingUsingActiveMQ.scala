@@ -20,6 +20,9 @@ object ExampleWithMessagingUsingActiveMQ extends App with RouteBuilderSupport {
           case _ => -->("jms:invalidOrders")
         })
       }
+
+    from("jms:xmlOrders")
+      .process(exchange => println(exchange.getIn().getHeader("CamelFileName")))
   }
   context.addRoutes(routeBuilder)
   context.start

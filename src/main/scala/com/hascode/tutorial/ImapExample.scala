@@ -23,7 +23,7 @@ object ImapExample extends App {
   context.addRoutes(routeBuilder)
   context.start
   Thread.sleep(3000)
-  for (i <- 1 until 3) {
+  for (i <- 0 until 3) {
     var message = new MimeMessage(null: Session);
     message.setFrom(new InternetAddress("test@hascode.com"));
     message.addRecipient(Message.RecipientType.TO, new InternetAddress(

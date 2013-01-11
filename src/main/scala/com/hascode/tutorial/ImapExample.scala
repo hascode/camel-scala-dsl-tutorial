@@ -30,10 +30,11 @@ object ImapExample extends App {
       "foo@hascode.com"));
     message.setSubject("Test E-Mail #" + i);
     message.setText("This is a fine test e-mail. It is the " + i + " message of 3.");
+    println("sending new email: #" + i)
     user.deliver(message);
     Thread.sleep(2000)
   }
 
-  mailServer.stop
+  while (true) {}
 }
 

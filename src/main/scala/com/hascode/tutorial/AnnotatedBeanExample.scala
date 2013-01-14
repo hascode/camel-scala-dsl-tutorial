@@ -9,7 +9,7 @@ import org.apache.activemq.ActiveMQConnectionFactory
 object AnnotatedBeanExample extends App {
   val context: CamelContext = new DefaultCamelContext
   val connectionFactory: ConnectionFactory = new ActiveMQConnectionFactory("vm://localhost")
-  context.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+  context.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory))
 
   val routeBuilder = new RouteBuilder {
     from("file:data/inbox").bean(classOf[RecipientsBean])

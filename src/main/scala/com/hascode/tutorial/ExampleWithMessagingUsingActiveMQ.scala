@@ -11,7 +11,7 @@ import org.apache.camel.scala.dsl.builder.RouteBuilderSupport
 object ExampleWithMessagingUsingActiveMQ extends App with RouteBuilderSupport {
   val context: CamelContext = new DefaultCamelContext
   val connectionFactory: ConnectionFactory = new ActiveMQConnectionFactory("vm://localhost")
-  context.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
+  context.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory))
   val routeBuilder = new RouteBuilder {
     from("file:data/inbox")
       .choice {

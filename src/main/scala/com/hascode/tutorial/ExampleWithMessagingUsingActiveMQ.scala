@@ -7,6 +7,7 @@ import org.apache.camel.component.jms.JmsComponent
 import org.apache.activemq.ActiveMQConnectionFactory
 import org.apache.camel.Processor
 import org.apache.camel.scala.dsl.builder.RouteBuilderSupport
+import org.apache.camel.Exchange
 
 object ExampleWithMessagingUsingActiveMQ extends App with RouteBuilderSupport {
   val context: CamelContext = new DefaultCamelContext
@@ -14,18 +15,27 @@ object ExampleWithMessagingUsingActiveMQ extends App with RouteBuilderSupport {
   context.addComponent("jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory))
   val routeBuilder = new RouteBuilder {
     from("file:data/inbox")
-      .choice {
-        when(_.in("CamelFileName") match {
-          case x: String => if (x.endsWith(".xml")) -->("jms.xmlOrders") else -->("jms:csvOrders")
-          case _ => -->("jms:invalidOrders")
-        })
-      }
+      .choice()
+      .when(fileEndsWith(_, "xml")).to("jms:xmlOrders")
+      .when(fileEndsWith(_, "csv")).to("jms:csvOrders")
+      .otherwise().to("jms:unknownOrders")
 
     from("jms:xmlOrders")
-      .process(exchange => println(exchange.getIn().getHeader("CamelFileName")))
+      .process(exchange => println("XML type order received: " + exchange.getIn().getHeader("CamelFileName")))
+    from("jms:csvOrders")
+      .process(exchange => println("CSV type order received: " + exchange.getIn().getHeader("CamelFileName")))
+    from("jms:unknownOrders")
+      .process(exchange => println("Unknown type order received: " + exchange.getIn().getHeader("CamelFileName")))
   }
   context.addRoutes(routeBuilder)
   context.start
   while (true) {}
+
+  def fileEndsWith(ex: Exchange, fileExt: String): Boolean = {
+    ex.getIn().getHeader("CamelFileName") match {
+      case x: String => return x.endsWith(fileExt)
+      case _ => false
+    }
+  }
 }
 

@@ -3,3 +3,6 @@
 target
 .classpath
 .cache
+activemq-data
+.camel
+data/outbox/*

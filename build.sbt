@@ -12,5 +12,6 @@ libraryDependencies ++= Seq(
 	"ch.qos.logback" % "logback-classic" % "1.0.9",
 	"javax.mail" % "mail" % "1.4.5",
 	"com.icegreen" % "greenmail" % "1.3",
-	"org.apache.camel" % "camel-mail" % "2.10.3"
+	"org.apache.camel" % "camel-mail" % "2.10.3",
+	"org.apache.camel" % "camel-velocity" % "2.10.3"
 )

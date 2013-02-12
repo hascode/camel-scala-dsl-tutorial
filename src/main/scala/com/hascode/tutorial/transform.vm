@@ -1,0 +1,10 @@
+This is the transformed file
+
+Let's iterate over the available headers:
+
+#foreach ($key in $headers.keySet())
+- key: $key has value: $headers.get($key)
+#end
+
+The body:
+${body}
